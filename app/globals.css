@@ -1,0 +1,33 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  letter-spacing: 0.02em;
+}
+
+@layer base {
+  :root {
+    --radius: 0.75rem;
+  }
+}
+
+@layer utilities {
+  .glassmorphism {
+    @apply bg-white/5 backdrop-blur-xl border border-white/10;
+  }
+
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .aurora-bg {
+    background-image:
+      radial-gradient(at 50% 50%, hsla(270, 40%, 25%, 0.3) 0px, transparent 50%),
+      radial-gradient(at 80% 0%, hsla(189, 80%, 30%, 0.3) 0px, transparent 50%),
+      radial-gradient(at 0% 50%, hsla(355, 70%, 30%, 0.3) 0px, transparent 50%),
+      radial-gradient(at 80% 50%, hsla(340, 70%, 35%, 0.3) 0px, transparent 50%),
+      radial-gradient(at 0% 100%, hsla(22, 100%, 40%, 0.2) 0px, transparent 50%),
+      radial-gradient(at 0% 0%, hsla(343, 100%, 50%, 0.3) 0px, transparent 50%);
+  }
+}
