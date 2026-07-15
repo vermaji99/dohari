@@ -74,7 +74,17 @@ export default function ScrollAnimationBg() {
             alt="Animated Background"
             className="w-full h-full object-cover"
           />
-          <div className="absolute inset-0 bg-[#050505]/70 backdrop-blur-sm" />
+          <div className="absolute inset-0 bg-[#050505]/50 backdrop-blur-sm" />
+        </>
+      )}
+      {!isLoaded && (
+        <>
+          <img
+            src={framePaths[0]}
+            alt="Animated Background"
+            className="w-full h-full object-cover"
+          />
+          <div className="absolute inset-0 bg-[#050505]/50 backdrop-blur-sm" />
         </>
       )}
     </div>
