@@ -1,11 +1,9 @@
 "use client";
 
-import React, { useState, useEffect, useRef, useMemo } from "react";
-import { useScroll, useTransform } from "framer-motion";
+import React, { useState, useEffect } from "react";
+import { useScroll } from "framer-motion";
 
 const TOTAL_FRAMES = 100;
-const PRELOAD_BATCH_SIZE = 10;
-const PRELOAD_BUFFER = 5;
 
 const framePaths = Array.from({ length: TOTAL_FRAMES }, (_, i) => {
   const frameNumber = String(i + 1).padStart(3, "0");
@@ -14,61 +12,53 @@ const framePaths = Array.from({ length: TOTAL_FRAMES }, (_, i) => {
 
 export default function ScrollAnimationBg() {
   const [currentFrame, setCurrentFrame] = useState(0);
-  const [loadedFrames, setLoadedFrames] = useState<Set<number>>(new Set());
-  const [isInitialLoaded, setIsInitialLoaded] = useState(false);
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [loadedCount, setLoadedCount] = useState(0);
   const [error, setError] = useState<string | null>(null);
-  const loadedFramesRef = useRef<Set<number>>(new Set());
 
   const { scrollYProgress } = useScroll();
 
-  // Memoize the frame path for current frame to prevent unnecessary re-renders
-  const currentFramePath = useMemo(() => {
-    return framePaths[currentFrame];
-  }, [currentFrame]);
-
-  // Preload a single frame
-  const preloadFrame = useRef((frameIndex: number) => {
-    if (loadedFramesRef.current.has(frameIndex)) return;
-    if (frameIndex < 0 || frameIndex >= TOTAL_FRAMES) return;
-
-    const img = new Image();
-    img.src = framePaths[frameIndex];
-    img.onload = () => {
-      loadedFramesRef.current.add(frameIndex);
-      setLoadedFrames(new Set(loadedFramesRef.current));
-    };
-    img.onerror = () => {
-      console.error(`Failed to load frame ${frameIndex + 1}`);
-    };
-  });
-
-  // Preload initial frames and then preload frames near current scroll position
+  // Preload all images first
   useEffect(() => {
-    // Preload first batch of frames
-    const initialBatch = Array.from({ length: Math.min(PRELOAD_BATCH_SIZE, TOTAL_FRAMES) }, (_, i) => i);
-    initialBatch.forEach(index => preloadFrame.current(index));
+    let count = 0;
+    let hasError = false;
 
-    // Mark initial loaded when first frame is ready
-    const checkInitialLoad = setInterval(() => {
-      if (loadedFramesRef.current.has(0)) {
-        setIsInitialLoaded(true);
-        clearInterval(checkInitialLoad);
+    const preloadImage = (src: string, index: number) => {
+      return new Promise<void>((resolve, reject) => {
+        const img = new Image();
+        img.src = src;
+        img.onload = () => {
+          count++;
+          setLoadedCount(count);
+          resolve();
+        };
+        img.onerror = () => {
+          hasError = true;
+          reject(new Error(`Failed to load frame ${index + 1}`));
+        };
+      });
+    };
+
+    const preloadAll = async () => {
+      try {
+        const promises = framePaths.map((src, index) => preloadImage(src, index));
+        await Promise.all(promises);
+        if (!hasError) {
+          setIsLoaded(true);
+        }
+      } catch (err) {
+        setError(err instanceof Error ? err.message : "Failed to load frames");
       }
-    }, 100);
+    };
 
-    return () => clearInterval(checkInitialLoad);
+    preloadAll();
   }, []);
 
-  // Preload frames around current scroll position
+  // Update current frame based on scroll
   useEffect(() => {
     const unsubscribe = scrollYProgress.on("change", (latest) => {
-      const newFrame = Math.max(0, Math.min(Math.round(latest * (TOTAL_FRAMES - 1)), TOTAL_FRAMES - 1));
-      setCurrentFrame(newFrame);
-
-      // Preload frames before and after current frame
-      for (let i = Math.max(0, newFrame - PRELOAD_BUFFER); i <= Math.min(TOTAL_FRAMES - 1, newFrame + PRELOAD_BUFFER); i++) {
-        preloadFrame.current(i);
-      }
+      const newFrame = Math.round(latest * (TOTAL_FRAMES - 1));
+      setCurrentFrame(Math.max(0, Math.min(newFrame, TOTAL_FRAMES - 1)));
     });
 
     return unsubscribe;
@@ -81,19 +71,24 @@ export default function ScrollAnimationBg() {
           <p className="text-xl">{error}</p>
         </div>
       )}
-      {!isInitialLoaded && !error && (
-        <div className="absolute inset-0 flex items-center justify-center text-white z-50 bg-black/90">
-          <p className="text-xl">Loading...</p>
+      {!isLoaded && !error && (
+        <div className="absolute inset-0 flex flex-col items-center justify-center text-white z-50 bg-black/90">
+          <p className="text-xl mb-4">Loading...</p>
+          <div className="w-64 h-2 bg-white/20 rounded-full overflow-hidden">
+            <div 
+              className="h-full bg-primary transition-all duration-300"
+              style={{ width: `${(loadedCount / TOTAL_FRAMES) * 100}%` }}
+            />
+          </div>
+          <p className="mt-2 text-sm">{loadedCount}/{TOTAL_FRAMES} frames</p>
         </div>
       )}
-      {isInitialLoaded && (
+      {isLoaded && (
         <>
           <img
-            key={currentFrame}
-            src={currentFramePath}
+            src={framePaths[currentFrame]}
             alt="Animated Background"
             className="w-full h-full object-cover"
-            loading="eager"
           />
           <div className="absolute inset-0 bg-[#050505]/60 backdrop-blur-sm" />
         </>
