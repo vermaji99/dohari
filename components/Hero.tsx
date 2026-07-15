@@ -61,7 +61,7 @@ export default function Hero() {
 
       {/* Hero Content */}
       <motion.div
-        style={{ y: y1, x: mousePosition.x * -0.5, y: mousePosition.y * -0.5 }}
+        style={{ y: y1, x: mousePosition.x * -0.5 }}
         className="relative z-10 text-center px-6"
       >
         <motion.div
