@@ -12,6 +12,7 @@ const framePaths = Array.from({ length: TOTAL_FRAMES }, (_, i) => {
 
 export default function ScrollAnimationBg() {
   const [currentFrame, setCurrentFrame] = useState(0);
+  const [error, setError] = useState<string | null>(null);
 
   const { scrollYProgress } = useScroll();
 
@@ -24,17 +25,28 @@ export default function ScrollAnimationBg() {
   useEffect(() => {
     return frameIndex.onChange((latest) => {
       const newFrame = Math.round(latest);
-      console.log("Current frame:", newFrame);
+      console.log("Current frame:", newFrame, "path:", framePaths[newFrame]);
       setCurrentFrame(newFrame);
     });
   }, [frameIndex]);
 
+  const handleError = (e: any) => {
+    console.error("Image load error:", e);
+    setError(`Failed to load ${framePaths[currentFrame]}`);
+  };
+
   return (
     <div className="fixed inset-0 w-full h-full -z-10">
+      {error && (
+        <div className="absolute inset-0 flex items-center justify-center text-white z-50 bg-black/80">
+          <p>{error}</p>
+        </div>
+      )}
       <img
         src={framePaths[currentFrame]}
         alt="Animated Background"
         className="w-full h-full object-cover"
+        onError={handleError}
       />
       <div className="absolute inset-0 bg-[#050505]/60 backdrop-blur-sm" />
     </div>
