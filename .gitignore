@@ -33,4 +33,4 @@ yarn-error.log*
 next-env.d.ts
 
 # large animation frames
-/public/images/bg-frames
+# /public/images/bg-frames
