@@ -26,11 +26,6 @@ export default function Hero() {
       ref={containerRef}
       className="relative w-full h-screen overflow-hidden flex items-center justify-center"
     >
-      {/* Animated Background */}
-      <div className="absolute inset-0 aurora-bg animate-aurora"></div>
-
-      {/* Dark overlay for readability */}
-      <div className="absolute inset-0 bg-gradient-to-b from-[#050505]/80 via-[#050505]/60 to-[#050505]"></div>
 
       {/* Particles */}
       <div className="absolute inset-0 pointer-events-none">

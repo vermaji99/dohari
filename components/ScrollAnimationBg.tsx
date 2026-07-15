@@ -13,6 +13,8 @@ const framePaths = Array.from({ length: TOTAL_FRAMES }, (_, i) => {
 export default function ScrollAnimationBg() {
   const [currentFrame, setCurrentFrame] = useState(0);
   const [isLoaded, setIsLoaded] = useState(false);
+  const [loadedCount, setLoadedCount] = useState(0);
+  const [error, setError] = useState<string | null>(null);
 
   const { scrollYProgress } = useScroll();
 
@@ -24,34 +26,56 @@ export default function ScrollAnimationBg() {
 
   // Preload all images
   useEffect(() => {
-    let loadedCount = 0;
-    const images = framePaths.map((src) => {
+    let count = 0;
+    framePaths.forEach((src, index) => {
       const img = new Image();
       img.src = src;
       img.onload = () => {
-        loadedCount++;
-        if (loadedCount === TOTAL_FRAMES) {
+        count++;
+        setLoadedCount(count);
+        console.log(`Loaded frame ${index + 1}/${TOTAL_FRAMES}:`, src);
+        if (count === TOTAL_FRAMES) {
+          console.log("All frames loaded!");
           setIsLoaded(true);
         }
       };
-      return img;
+      img.onerror = (e) => {
+        console.error(`Failed to load frame ${index + 1}:`, src, e);
+        setError(`Failed to load frame ${index + 1}`);
+      };
     });
   }, []);
 
   useEffect(() => {
     return frameIndex.onChange((latest) => {
-      setCurrentFrame(Math.round(latest));
+      const newFrame = Math.round(latest);
+      console.log("Current frame:", newFrame);
+      setCurrentFrame(newFrame);
     });
   }, [frameIndex]);
 
   return (
     <div className="fixed inset-0 w-full h-full -z-10">
+      {error && (
+        <div className="absolute inset-0 flex items-center justify-center text-red-500 z-50">
+          {error}
+        </div>
+      )}
+      {!isLoaded && !error && (
+        <div className="absolute inset-0 flex flex-col items-center justify-center text-white z-50">
+          <p>Loading background frames...</p>
+          <p>{loadedCount}/{TOTAL_FRAMES}</p>
+        </div>
+      )}
       {isLoaded && (
-        <img
-          src={framePaths[currentFrame]}
-          alt="Animated Background"
-          className="w-full h-full object-cover"
-        />
+        <>
+          <img
+            src={framePaths[currentFrame]}
+            alt="Animated Background"
+            className="w-full h-full object-cover"
+          />
+          <div className="absolute inset-0 bg-[#050505]/70 backdrop-blur-sm" />
+        </>
       )}
     </div>
   );
