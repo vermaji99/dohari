@@ -43,7 +43,7 @@ export default function ScrollAnimationBg() {
         </div>
       )}
       <img
-        src={framePaths[currentFrame]}
+        src="/images/canal_dam.png"
         alt="Animated Background"
         className="w-full h-full object-cover"
         onError={handleError}
