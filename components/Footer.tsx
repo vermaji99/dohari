@@ -99,7 +99,7 @@ export default function Footer() {
                   alt="Developer"
                   className="w-10 h-10 rounded-full object-cover border border-white/20"
                 />
-                <span className="text-white font-medium text-sm">Your Name</span>
+                <span className="text-white font-medium text-sm">Shubham Verma</span>
               </div>
             </div>
           </div>
