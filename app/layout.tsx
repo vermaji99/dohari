@@ -3,6 +3,8 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import LenisProvider from "@/components/LenisProvider";
 import ScrollAnimationBg from "@/components/ScrollAnimationBg";
+import { LoadingProvider } from "@/components/LoadingProvider";
+import LayoutContent from "@/components/LayoutContent";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -117,10 +119,9 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-[#050505] text-white overflow-x-hidden`}
       >
-        <LenisProvider>
-          <ScrollAnimationBg />
-          {children}
-        </LenisProvider>
+        <LoadingProvider>
+          <LayoutContent>{children}</LayoutContent>
+        </LoadingProvider>
       </body>
     </html>
   );
