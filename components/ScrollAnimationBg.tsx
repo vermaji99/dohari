@@ -1,7 +1,7 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from "react";
-import { useScroll, useSpring, useTransform, motion } from "framer-motion";
+import React, { useState, useEffect } from "react";
+import { useScroll, useSpring, useTransform } from "framer-motion";
 import { useLoading } from "./LoadingProvider";
 
 const TOTAL_FRAMES = 100;
@@ -14,29 +14,27 @@ const framePaths = Array.from({ length: TOTAL_FRAMES }, (_, i) => {
 export default function ScrollAnimationBg() {
   const { setIsLoading, setLoadedCount } = useLoading();
   const [error, setError] = useState<string | null>(null);
-
-  // Track current and previous frame for cross-fade
-  const [currentFrame, setCurrentFrame] = useState(0);
-  const [previousFrame, setPreviousFrame] = useState(0);
+  const [currentFrameIndex, setCurrentFrameIndex] = useState(0);
+  const [nextFrameIndex, setNextFrameIndex] = useState(0);
 
   const { scrollYProgress } = useScroll();
 
-  // Very smooth spring for scroll progress
+  // Super smooth spring settings
   const smoothProgress = useSpring(scrollYProgress, {
-    stiffness: 300,
-    damping: 60,
-    restDelta: 0.00001
+    stiffness: 500,
+    damping: 100,
+    restDelta: 0.0000001
   });
 
   const frameIndex = useTransform(smoothProgress, [0, 1], [0, TOTAL_FRAMES - 1]);
 
-  // Preload all images first
+  // Preload all images
   useEffect(() => {
     let count = 0;
     let hasError = false;
 
     const preloadImage = (src: string) => {
-      return new Promise<void>((resolve, reject) => {
+      return new Promise<void>((resolve) => {
         const img = new Image();
         img.src = src;
         img.onload = () => {
@@ -46,9 +44,9 @@ export default function ScrollAnimationBg() {
         };
         img.onerror = () => {
           hasError = true;
-          reject(new Error("Failed to load frame"));
+          resolve();
         };
-      });
+      };
     };
 
     const preloadAll = async () => {
@@ -64,20 +62,23 @@ export default function ScrollAnimationBg() {
     };
 
     preloadAll();
-  }, [setIsLoading]);
+  }, [setIsLoading, setLoadedCount]);
 
-  // Update current and previous frames for cross-fade
+  // Update frames for cross-fade without remount
   useEffect(() => {
     const unsubscribe = frameIndex.on("change", (latest) => {
       const newFrame = Math.round(latest);
-      const clampedFrame = Math.max(0, Math.min(newFrame, TOTAL_FRAMES - 1));
-      if (clampedFrame !== currentFrame) {
-        setPreviousFrame(currentFrame);
-        setCurrentFrame(clampedFrame);
+      const clamped = Math.max(0, Math.min(newFrame, TOTAL_FRAMES - 1));
+      if (clamped !== currentFrameIndex) {
+        setNextFrameIndex(clamped);
+        setTimeout(() => {
+          setCurrentFrameIndex(clamped);
+        }, 75);
       }
     });
+
     return unsubscribe;
-  }, [frameIndex, currentFrame]);
+  }, [frameIndex, currentFrameIndex]);
 
   return (
     <div className="fixed inset-0 w-full h-full -z-10">
@@ -86,26 +87,19 @@ export default function ScrollAnimationBg() {
           <p className="text-xl">{error}</p>
         </div>
       )}
-      {/* Loading screen is now handled in the provider wrapper */}
-      <motion.img
-        key={`prev-${previousFrame}`}
-        src={framePaths[previousFrame]}
-        alt="Dohrighat"
-        className="absolute inset-0 w-full h-full object-cover"
-        initial={{ opacity: 1 }}
-        animate={{ opacity: 0 }}
-        transition={{ duration: 0.4, ease: "easeInOut" }}
-      />
-      <motion.img
-        key={`current-${currentFrame}`}
-        src={framePaths[currentFrame]}
+      <img
+        src={framePaths[currentFrameIndex]}
         alt="Dohrighat - Where Heritage Meets the River"
         className="absolute inset-0 w-full h-full object-cover"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.4, ease: "easeInOut" }}
+        style={{ opacity: 1, transition: 'opacity 0.35s ease-in-out' }}
       />
-      <div className="absolute inset-0 bg-[#050505]/60 backdrop-blur-none" />
+      <img
+        src={framePaths[nextFrameIndex]}
+        alt="Dohrighat"
+        className="absolute inset-0 w-full h-full object-cover"
+        style={{ opacity: nextFrameIndex === currentFrameIndex ? 0 : 1, transition: 'opacity 0.35s ease-in-out' }}
+      />
+      <div className="absolute inset-0 bg-[#050505]/60 backdrop-blur-none pointer-events-none" />
     </div>
   );
 }
