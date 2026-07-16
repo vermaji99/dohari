@@ -84,8 +84,25 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="border-t border-white/10 pt-8 text-center text-muted-foreground text-sm">
-          <p>© 2025 Dohrighat Official. All rights reserved.</p>
+        <div className="border-t border-white/10 pt-8">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-6">
+            <p className="text-muted-foreground text-sm">
+              © 2025 Dohrighat Official. All rights reserved.
+            </p>
+            <div className="flex items-center gap-4">
+              <p className="text-muted-foreground text-sm">
+                Developed with ❤️ by
+              </p>
+              <div className="flex items-center gap-3">
+                <img
+                  src="/images/developer-portrait.jpg"
+                  alt="Developer"
+                  className="w-10 h-10 rounded-full object-cover border border-white/20"
+                />
+                <span className="text-white font-medium text-sm">Your Name</span>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </footer>
