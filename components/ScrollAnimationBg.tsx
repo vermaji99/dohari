@@ -1,7 +1,7 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
-import { useScroll } from "framer-motion";
+import React, { useState, useEffect, useRef } from "react";
+import { useScroll, useSpring, useTransform } from "framer-motion";
 
 const TOTAL_FRAMES = 100;
 
@@ -11,12 +11,20 @@ const framePaths = Array.from({ length: TOTAL_FRAMES }, (_, i) => {
 });
 
 export default function ScrollAnimationBg() {
-  const [currentFrame, setCurrentFrame] = useState(0);
   const [isLoaded, setIsLoaded] = useState(false);
   const [loadedCount, setLoadedCount] = useState(0);
   const [error, setError] = useState<string | null>(null);
+  const prevFrameRef = useRef(0);
 
   const { scrollYProgress } = useScroll();
+  const smoothProgress = useSpring(scrollYProgress, {
+    stiffness: 100,
+    damping: 30,
+    restDelta: 0.001
+  });
+  const frameIndex = useTransform(smoothProgress, [0, 1], [0, TOTAL_FRAMES - 1]);
+
+  const [displayFrame, setDisplayFrame] = useState(0);
 
   // Preload all images first
   useEffect(() => {
@@ -54,15 +62,18 @@ export default function ScrollAnimationBg() {
     preloadAll();
   }, []);
 
-  // Update current frame based on scroll
+  // Update display frame with smooth transitions
   useEffect(() => {
-    const unsubscribe = scrollYProgress.on("change", (latest) => {
-      const newFrame = Math.round(latest * (TOTAL_FRAMES - 1));
-      setCurrentFrame(Math.max(0, Math.min(newFrame, TOTAL_FRAMES - 1)));
+    const unsubscribe = frameIndex.on("change", (latest) => {
+      const newFrame = Math.round(latest);
+      if (newFrame !== prevFrameRef.current) {
+        setDisplayFrame(Math.max(0, Math.min(newFrame, TOTAL_FRAMES - 1)));
+        prevFrameRef.current = newFrame;
+      }
     });
 
     return unsubscribe;
-  }, [scrollYProgress]);
+  }, [frameIndex]);
 
   return (
     <div className="fixed inset-0 w-full h-full -z-10">
@@ -86,11 +97,11 @@ export default function ScrollAnimationBg() {
       {isLoaded && (
         <>
           <img
-            src={framePaths[currentFrame]}
+            src={framePaths[displayFrame]}
             alt="Animated Background"
-            className="w-full h-full object-cover"
+            className="w-full h-full object-cover transition-opacity duration-150"
           />
-          <div className="absolute inset-0 bg-[#050505]/60 backdrop-blur-sm" />
+          <div className="absolute inset-0 bg-[#050505]/60 backdrop-blur-none" />
         </>
       )}
     </div>
