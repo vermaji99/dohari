@@ -20,14 +20,8 @@ export default function ScrollAnimationBg() {
 
   const { scrollYProgress } = useScroll();
 
-  // Extremely stiff spring for instant response
-  const smoothProgress = useSpring(scrollYProgress, {
-    stiffness: 1000,
-    damping: 200,
-    restDelta: 0.00000001
-  });
-
-  const frameIndex = useTransform(smoothProgress, [0, 1], [0, TOTAL_FRAMES - 1]);
+  // Use raw scroll progress for instant, direct response
+  const frameIndex = useTransform(scrollYProgress, [0, 1], [0, TOTAL_FRAMES - 1]);
 
   // Preload all images and force browser to cache them
   useEffect(() => {
@@ -65,7 +59,7 @@ export default function ScrollAnimationBg() {
     preloadAll();
   }, [setIsLoading, setLoadedCount]);
 
-  // Update frame using requestAnimationFrame
+  // Update frame instantly
   useEffect(() => {
     const unsubscribe = frameIndex.on("change", (latest) => {
       const newFrame = Math.round(latest);
@@ -73,9 +67,7 @@ export default function ScrollAnimationBg() {
 
       if (clampedFrame !== lastFrameRef.current) {
         lastFrameRef.current = clampedFrame;
-        requestAnimationFrame(() => {
-          setCurrentFrame(clampedFrame);
-        });
+        setCurrentFrame(clampedFrame);
       }
     });
 
