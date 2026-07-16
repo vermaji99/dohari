@@ -199,6 +199,7 @@ export const exploreCards = [
     description: "Experience the serene beauty of the sacred Ghaghara river",
     image: "/images/river_ghaghara.png",
     imageAlt: "Ghaghara River Dohrighat",
+    href: "/rivers",
   },
   {
     id: "historic-ghats",
@@ -207,6 +208,7 @@ export const exploreCards = [
     description: "Visit the ancient Muktidham temple and ghats",
     image: "/images/mukti_dham2.png",
     imageAlt: "Muktidham Dohrighat",
+    href: "/temples",
   },
   {
     id: "shiv-temple",
@@ -215,6 +217,7 @@ export const exploreCards = [
     description: "See the sacred Shiv Temple",
     image: "/images/shiv_temple.png",
     imageAlt: "Shiv Temple Dohrighat",
+    href: "/temples",
   },
   {
     id: "pump-canal",
@@ -223,6 +226,7 @@ export const exploreCards = [
     description: "Asia's major pump canal, a significant engineering landmark",
     image: "/images/canal_dam.png",
     imageAlt: "Dohrighat Pump Canal",
+    href: "/canals",
   },
   {
     id: "education",
@@ -231,6 +235,7 @@ export const exploreCards = [
     description: "Quality schools and colleges in Dohrighat",
     image: "/images/college_1.png",
     imageAlt: "Education in Dohrighat",
+    href: "/education",
   },
   {
     id: "transport",
@@ -239,6 +244,7 @@ export const exploreCards = [
     description: "Railway and road connectivity to Dohrighat",
     image: "/images/railway_s.png",
     imageAlt: "Transport in Dohrighat",
+    href: "/about",
   },
 ];
 

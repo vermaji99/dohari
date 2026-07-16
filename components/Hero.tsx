@@ -2,6 +2,7 @@
 
 import React, { useEffect, useRef, useState } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
+import Link from "next/link";
 import { Button } from "./ui/button";
 
 export default function Hero() {
@@ -90,12 +91,16 @@ export default function Hero() {
           transition={{ duration: 0.8, delay: 0.6 }}
           className="flex flex-col sm:flex-row items-center gap-4 justify-center"
         >
-          <Button size="lg" className="text-lg px-8 py-6">
-            Explore
-          </Button>
-          <Button variant="outline" size="lg" className="text-lg px-8 py-6">
-            Plan Your Visit
-          </Button>
+          <Link href="/explore">
+            <Button size="lg" className="text-lg px-8 py-6">
+              Explore
+            </Button>
+          </Link>
+          <Link href="/contact">
+            <Button variant="outline" size="lg" className="text-lg px-8 py-6">
+              Plan Your Visit
+            </Button>
+          </Link>
         </motion.div>
       </motion.div>
 
