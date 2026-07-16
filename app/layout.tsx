@@ -62,7 +62,7 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const jsonLd = {
+  const citySchema = {
     "@context": "https://schema.org",
     "@type": "City",
     name: "Dohrighat",
@@ -87,12 +87,30 @@ export default function RootLayout({
     sameAs: []
   };
 
+  const webSiteSchema = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    name: "Dohrighat Official",
+    url: "https://dohari.vercel.app",
+    description: "Official website for Dohrighat (Mau, Uttar Pradesh). Explore heritage, temples, canals, Ghaghara River, education, food, tourism, and culture of Dohrighat - Mau.",
+    potentialAction: {
+      "@type": "SearchAction",
+      target: "https://dohari.vercel.app/search?q={search_term_string}",
+      "query-input": "required name=search_term_string"
+    }
+  };
+
   return (
     <html lang="en" className="dark">
       <head>
+        <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏞️</text></svg>" />
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(citySchema) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(webSiteSchema) }}
         />
       </head>
       <body
