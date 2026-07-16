@@ -95,7 +95,7 @@ export default function Footer() {
               </p>
               <div className="flex items-center gap-3">
                 <img
-                  src="/images/developer-portrait.jpg"
+                  src="/images/developer-portrait.png"
                   alt="Developer"
                   className="w-10 h-10 rounded-full object-cover border border-white/20"
                 />
