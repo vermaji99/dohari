@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useScroll, useSpring, useTransform } from "framer-motion";
 import { useLoading } from "./LoadingProvider";
 
@@ -14,21 +14,22 @@ const framePaths = Array.from({ length: TOTAL_FRAMES }, (_, i) => {
 export default function ScrollAnimationBg() {
   const { setIsLoading, setLoadedCount } = useLoading();
   const [error, setError] = useState<string | null>(null);
-  const [currentFrameIndex, setCurrentFrameIndex] = useState(0);
-  const [nextFrameIndex, setNextFrameIndex] = useState(0);
+  const [currentFrame, setCurrentFrame] = useState(0);
+  const imgRef = useRef<HTMLImageElement>(null);
+  const lastFrameRef = useRef(0);
 
   const { scrollYProgress } = useScroll();
 
-  // Super smooth spring settings
+  // Extremely stiff spring for instant response
   const smoothProgress = useSpring(scrollYProgress, {
-    stiffness: 500,
-    damping: 100,
-    restDelta: 0.0000001
+    stiffness: 1000,
+    damping: 200,
+    restDelta: 0.00000001
   });
 
   const frameIndex = useTransform(smoothProgress, [0, 1], [0, TOTAL_FRAMES - 1]);
 
-  // Preload all images
+  // Preload all images and force browser to cache them
   useEffect(() => {
     let count = 0;
     let hasError = false;
@@ -46,7 +47,7 @@ export default function ScrollAnimationBg() {
           hasError = true;
           resolve();
         };
-      };
+      });
     };
 
     const preloadAll = async () => {
@@ -64,21 +65,22 @@ export default function ScrollAnimationBg() {
     preloadAll();
   }, [setIsLoading, setLoadedCount]);
 
-  // Update frames for cross-fade without remount
+  // Update frame using requestAnimationFrame
   useEffect(() => {
     const unsubscribe = frameIndex.on("change", (latest) => {
       const newFrame = Math.round(latest);
-      const clamped = Math.max(0, Math.min(newFrame, TOTAL_FRAMES - 1));
-      if (clamped !== currentFrameIndex) {
-        setNextFrameIndex(clamped);
-        setTimeout(() => {
-          setCurrentFrameIndex(clamped);
-        }, 75);
+      const clampedFrame = Math.max(0, Math.min(newFrame, TOTAL_FRAMES - 1));
+
+      if (clampedFrame !== lastFrameRef.current) {
+        lastFrameRef.current = clampedFrame;
+        requestAnimationFrame(() => {
+          setCurrentFrame(clampedFrame);
+        });
       }
     });
 
     return unsubscribe;
-  }, [frameIndex, currentFrameIndex]);
+  }, [frameIndex]);
 
   return (
     <div className="fixed inset-0 w-full h-full -z-10">
@@ -88,16 +90,14 @@ export default function ScrollAnimationBg() {
         </div>
       )}
       <img
-        src={framePaths[currentFrameIndex]}
+        ref={imgRef}
+        src={framePaths[currentFrame]}
         alt="Dohrighat - Where Heritage Meets the River"
         className="absolute inset-0 w-full h-full object-cover"
-        style={{ opacity: 1, transition: 'opacity 0.35s ease-in-out' }}
-      />
-      <img
-        src={framePaths[nextFrameIndex]}
-        alt="Dohrighat"
-        className="absolute inset-0 w-full h-full object-cover"
-        style={{ opacity: nextFrameIndex === currentFrameIndex ? 0 : 1, transition: 'opacity 0.35s ease-in-out' }}
+        style={{
+          willChange: 'contents',
+          imageRendering: 'auto'
+        }}
       />
       <div className="absolute inset-0 bg-[#050505]/60 backdrop-blur-none pointer-events-none" />
     </div>
