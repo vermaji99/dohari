@@ -16,6 +16,7 @@ import { Button } from "./ui/button";
 
 const navLinks = [
   { name: "Home", href: "/", icon: <Home className="w-5 h-5" /> },
+  { name: "Explore", href: "/explore", icon: <MapPin className="w-5 h-5" /> },
   { name: "About", href: "/about", icon: <Info className="w-5 h-5" /> },
   { 
     name: "Temples", 
