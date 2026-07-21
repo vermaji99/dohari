@@ -4,9 +4,9 @@ import React from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { motion } from "framer-motion";
-import { foodSweets } from "@/lib/data";
+import { clothingSarees } from "@/lib/data";
 
-export default function FoodClient() {
+export default function ClothingClient() {
   return (
     <main className="min-h-screen">
       <Navbar />
@@ -19,15 +19,15 @@ export default function FoodClient() {
             className="text-center mb-20"
           >
             <p className="text-primary uppercase tracking-[0.3em] mb-4">
-              Taste
+              Style
             </p>
             <h1 className="text-5xl md:text-7xl font-serif font-bold mb-8">
-              Food & Sweets
+              Clothing & Sarees
             </h1>
           </motion.div>
 
           <div className="grid md:grid-cols-2 gap-8">
-            {foodSweets.map((place, i) => (
+            {clothingSarees.map((place, i) => (
               <motion.div
                 key={place.id}
                 initial={{ opacity: 0, y: 30 }}
@@ -37,7 +37,7 @@ export default function FoodClient() {
                 className="group relative overflow-hidden rounded-2xl"
               >
                 <div className="w-full h-80 bg-gradient-to-br from-primary/20 to-primary/5 flex items-center justify-center">
-                  <span className="text-6xl">🍽️</span>
+                  <span className="text-6xl">👗</span>
                 </div>
                 <div className="absolute inset-0 bg-gradient-to-t from-[#050505] via-[#050505]/60 to-transparent"></div>
                 <div className="relative p-8 h-80 flex flex-col justify-end">

@@ -16,30 +16,28 @@ import { Button } from "./ui/button";
 
 const navLinks = [
   { name: "Home", href: "/", icon: <Home className="w-5 h-5" /> },
-  { name: "Explore", href: "/explore", icon: <MapPin className="w-5 h-5" /> },
-  { name: "About", href: "/about", icon: <Info className="w-5 h-5" /> },
+  { name: "Tourist Places", href: "/places", icon: <MapPin className="w-5 h-5" /> },
+  { name: "Rivers & Ghats", href: "/rivers", icon: <MapPin className="w-5 h-5" /> },
   { 
     name: "Temples", 
     href: "/temples", 
     icon: <Image src="/images/mukti_dham.png" alt="Temples" width={24} height={24} className="object-cover rounded-full" /> 
   },
   { 
-    name: "Canals & Dams", 
+    name: "Canals & Water", 
     href: "/canals", 
     icon: <Image src="/images/canal_dam.png" alt="Canals" width={24} height={24} className="object-cover rounded-full" /> 
   },
-  { 
-    name: "Rivers & Pools", 
-    href: "/rivers", 
-    icon: <Image src="/images/river_ghaghara.png" alt="Rivers" width={24} height={24} className="object-cover rounded-full" /> 
-  },
+  { name: "Markets", href: "/markets", icon: <MapPin className="w-5 h-5" /> },
+  { name: "Food & Sweets", href: "/food", icon: <MapPin className="w-5 h-5" /> },
   { 
     name: "Education", 
     href: "/education", 
     icon: <Image src="/images/college_1.png" alt="Education" width={24} height={24} className="object-cover rounded-full" /> 
   },
-  { name: "Places", href: "/places", icon: <MapPin className="w-5 h-5" /> },
+  { name: "Healthcare", href: "/healthcare", icon: <MapPin className="w-5 h-5" /> },
   { name: "Gallery", href: "/gallery", icon: <ImageIcon className="w-5 h-5" /> },
+  { name: "About", href: "/about", icon: <Info className="w-5 h-5" /> },
   { name: "Contact", href: "/contact", icon: <Mail className="w-5 h-5" /> },
 ];
 

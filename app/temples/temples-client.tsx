@@ -39,11 +39,17 @@ export default function TemplesClient() {
                 transition={{ duration: 0.6, delay: i * 0.1 }}
                 className="group relative overflow-hidden rounded-2xl glassmorphism"
               >
-                <img
-                  src={temple.images[0]}
-                  alt={temple.imageAlt}
-                  className="w-full h-72 object-cover transition-transform duration-700 group-hover:scale-110"
-                />
+                {temple.images.length > 0 ? (
+                  <img
+                    src={temple.images[0]}
+                    alt={temple.imageAlt}
+                    className="w-full h-72 object-cover transition-transform duration-700 group-hover:scale-110"
+                  />
+                ) : (
+                  <div className="w-full h-72 bg-gradient-to-br from-primary/20 to-primary/5 flex items-center justify-center">
+                    <span className="text-6xl">🛕</span>
+                  </div>
+                )}
                 <div className="p-8">
                   <h3 className="text-2xl font-serif font-bold mb-4 text-primary">
                     {temple.name}

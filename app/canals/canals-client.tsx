@@ -4,7 +4,7 @@ import React from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { motion } from "framer-motion";
-import { canals } from "@/lib/data";
+import { canalsWaterInfra } from "@/lib/data";
 
 export default function CanalsClient() {
   return (
@@ -30,7 +30,7 @@ export default function CanalsClient() {
           </motion.div>
 
           <div className="grid md:grid-cols-1 gap-8">
-            {canals.map((canal, i) => (
+            {canalsWaterInfra.map((canal, i) => (
               <motion.div
                 key={canal.id}
                 initial={{ opacity: 0, y: 30 }}
@@ -41,11 +41,17 @@ export default function CanalsClient() {
               >
                 <div className="grid md:grid-cols-2 gap-0">
                   <div className="relative">
-                    <img
-                      src={canal.images[0]}
-                      alt={canal.imageAlt}
-                      className="w-full h-full min-h-[400px] object-cover transition-transform duration-700 group-hover:scale-110"
-                    />
+                    {canal.images.length > 0 ? (
+                      <img
+                        src={canal.images[0]}
+                        alt={canal.imageAlt}
+                        className="w-full h-full min-h-[400px] object-cover transition-transform duration-700 group-hover:scale-110"
+                      />
+                    ) : (
+                      <div className="w-full h-full min-h-[400px] bg-gradient-to-br from-primary/20 to-primary/5 flex items-center justify-center">
+                        <span className="text-6xl">🚰</span>
+                      </div>
+                    )}
                   </div>
                   <div className="p-8 flex flex-col justify-center">
                     <h3 className="text-3xl font-serif font-bold mb-4 text-primary">

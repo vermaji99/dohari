@@ -36,11 +36,17 @@ export default function EducationClient() {
                 transition={{ duration: 0.6, delay: i * 0.1 }}
                 className="glassmorphism p-8 rounded-2xl"
               >
-                <img
-                  src={institute.images[0]}
-                  alt={institute.name}
-                  className="w-full h-64 object-cover rounded-xl mb-6"
-                />
+                {institute.images.length > 0 ? (
+                  <img
+                    src={institute.images[0]}
+                    alt={institute.name}
+                    className="w-full h-64 object-cover rounded-xl mb-6"
+                  />
+                ) : (
+                  <div className="w-full h-64 bg-gradient-to-br from-primary/20 to-primary/5 flex items-center justify-center rounded-xl mb-6">
+                    <span className="text-6xl">🎓</span>
+                  </div>
+                )}
                 <h3 className="text-3xl font-serif font-bold mb-4 text-white">
                   {institute.name}
                 </h3>

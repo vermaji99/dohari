@@ -26,19 +26,17 @@ export default function Footer() {
             </div>
           </div>
           <div>
-            <h4 className="font-semibold mb-4">Quick Links</h4>
+            <h4 className="font-semibold mb-4">Explore</h4>
             <ul className="space-y-2">
               {[
                 { name: "Home", href: "/" },
-                { name: "About", href: "/about" },
-                { name: "Explore", href: "/explore" },
-                { name: "Places", href: "/places" },
+                { name: "About Dohrighat", href: "/about" },
+                { name: "Tourist Places", href: "/places" },
+                { name: "Rivers & Ghats", href: "/rivers" },
                 { name: "Temples", href: "/temples" },
-                { name: "Canals & Dams", href: "/canals" },
-                { name: "Rivers & Pools", href: "/rivers" },
-                { name: "Education", href: "/education" },
+                { name: "Canals & Water", href: "/canals" },
+                { name: "Markets", href: "/markets" },
                 { name: "Gallery", href: "/gallery" },
-                { name: "Contact", href: "/contact" }
               ].map((link) => (
                 <li key={link.name}>
                   <Link
@@ -52,35 +50,46 @@ export default function Footer() {
             </ul>
           </div>
           <div>
-            <h4 className="font-semibold mb-4">Services</h4>
+            <h4 className="font-semibold mb-4">Local Life</h4>
             <ul className="space-y-2">
-              {["Food", "Business", "Emergency", "Contact"].map((link) => (
-                <li key={link}>
+              {[
+                { name: "Food & Sweets", href: "/food" },
+                { name: "Jewellery", href: "/jewellery" },
+                { name: "Clothing & Sarees", href: "/clothing" },
+                { name: "Education", href: "/education" },
+                { name: "Healthcare", href: "/healthcare" },
+                { name: "Transport", href: "/transport" },
+              ].map((link) => (
+                <li key={link.name}>
                   <Link
-                    href="/"
+                    href={link.href}
                     className="text-muted-foreground hover:text-white transition-colors"
                   >
-                    {link}
+                    {link.name}
                   </Link>
                 </li>
               ))}
             </ul>
           </div>
           <div>
-            <h4 className="font-semibold mb-4">Newsletter</h4>
-            <p className="text-muted-foreground mb-4 text-sm">
-              Subscribe for updates and news
-            </p>
-            <div className="flex gap-2">
-              <input
-                type="email"
-                placeholder="Your email"
-                className="flex-1 bg-white/5 border border-white/10 rounded-lg px-4 py-2 text-sm focus:outline-none focus:border-primary"
-              />
-              <button className="bg-primary text-primary-foreground px-4 py-2 rounded-lg font-medium hover:bg-primary/90 transition-colors">
-                Go
-              </button>
-            </div>
+            <h4 className="font-semibold mb-4">Information</h4>
+            <ul className="space-y-2">
+              {[
+                { name: "Events & Festivals", href: "/events" },
+                { name: "Local History", href: "/about" },
+                { name: "Emergency Services", href: "/healthcare" },
+                { name: "Contact", href: "/contact" },
+              ].map((link) => (
+                <li key={link.name}>
+                  <Link
+                    href={link.href}
+                    className="text-muted-foreground hover:text-white transition-colors"
+                  >
+                    {link.name}
+                  </Link>
+                </li>
+              ))}
+            </ul>
           </div>
         </div>
 

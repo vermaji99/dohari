@@ -4,7 +4,7 @@ import React from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { motion } from "framer-motion";
-import { riversPools } from "@/lib/data";
+import { riversGhats } from "@/lib/data";
 
 export default function RiversClient() {
   return (
@@ -30,7 +30,7 @@ export default function RiversClient() {
           </motion.div>
 
           <div className="grid md:grid-cols-1 gap-8">
-            {riversPools.map((place, i) => (
+            {riversGhats.map((place, i) => (
               <motion.div
                 key={place.id}
                 initial={{ opacity: 0, y: 30 }}
@@ -41,11 +41,17 @@ export default function RiversClient() {
               >
                 <div className="grid md:grid-cols-2 gap-0">
                   <div className="relative">
-                    <img
-                      src={place.images[0]}
-                      alt={place.imageAlt}
-                      className="w-full h-full min-h-[400px] object-cover transition-transform duration-700 group-hover:scale-110"
-                    />
+                    {place.images.length > 0 ? (
+                      <img
+                        src={place.images[0]}
+                        alt={place.imageAlt}
+                        className="w-full h-full min-h-[400px] object-cover transition-transform duration-700 group-hover:scale-110"
+                      />
+                    ) : (
+                      <div className="w-full h-full min-h-[400px] bg-gradient-to-br from-primary/20 to-primary/5 flex items-center justify-center">
+                        <span className="text-6xl">🌊</span>
+                      </div>
+                    )}
                   </div>
                   <div className="p-8 flex flex-col justify-center">
                     <h3 className="text-3xl font-serif font-bold mb-4 text-primary">
