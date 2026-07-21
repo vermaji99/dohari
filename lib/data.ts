@@ -17,13 +17,14 @@ export interface DohrighatPlace {
   name: string;
   category: string;
   subcategory?: string;
-  description: string;
+  description?: string;
   address?: string;
   phone?: string;
   website?: string;
   latitude?: number;
   longitude?: number;
   images: string[];
+  imageAlt?: string;
   imageSource?: string;
   openingHours?: string;
   rating?: number;
@@ -32,6 +33,7 @@ export interface DohrighatPlace {
   sourceUrl?: string;
   lastVerified?: string;
   history?: string;
+  timings?: string;
   entryFee?: string;
   nearbyAttractions?: string[];
   tips?: string;
@@ -50,6 +52,7 @@ export interface EducationalInstitute extends Omit<DohrighatPlace, 'category' | 
   principal?: string;
   affiliationNo?: string;
   schoolCode?: string;
+  contact?: string;
 }
 
 export const realImages: ImageData[] = [
