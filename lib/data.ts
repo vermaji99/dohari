@@ -10,11 +10,15 @@ export interface ImageData {
   alt: string;
   description: string;
   category: string;
+  source?: string;
+  credit?: string;
+  license?: string;
 }
 
 export interface DohrighatPlace {
   id: string;
   name: string;
+  slug?: string;
   category: string;
   subcategory?: string;
   description?: string;
@@ -37,6 +41,9 @@ export interface DohrighatPlace {
   entryFee?: string;
   nearbyAttractions?: string[];
   tips?: string;
+  tags?: string[];
+  priceRange?: string;
+  status?: string;
 }
 
 export interface EducationalInstitute extends Omit<DohrighatPlace, 'category' | 'subcategory'> {
@@ -63,6 +70,7 @@ export const realImages: ImageData[] = [
     alt: "Ghaghara River Dohrighat",
     description: "The majestic Ghaghara River flowing through Dohrighat",
     category: "rivers",
+    source: "Local photography",
   },
   // Temples
   {
@@ -71,6 +79,7 @@ export const realImages: ImageData[] = [
     alt: "Muktidham Dohrighat",
     description: "Muktidham Temple and Park located on the banks of the Ghaghara river in Dohrighat",
     category: "temples",
+    source: "Mau District Administration",
   },
   {
     id: "muktidham-2",
@@ -78,6 +87,7 @@ export const realImages: ImageData[] = [
     alt: "Muktidham Dohrighat - Side View",
     description: "Another beautiful view of Muktidham",
     category: "temples",
+    source: "Mau District Administration",
   },
   {
     id: "shiv-temple",
@@ -107,27 +117,6 @@ export const realImages: ImageData[] = [
     description: "Sai Baba Temple",
     category: "temples",
   },
-  {
-    id: "durga-maa-statue",
-    url: "/images/durga_maa.png",
-    alt: "Durga Maa Statue",
-    description: "Statue of Durga Maa",
-    category: "temples",
-  },
-  {
-    id: "hanuman-ji-statue",
-    url: "/images/hanuman_ji.png",
-    alt: "Hanuman Ji Statue",
-    description: "Statue of Hanuman Ji",
-    category: "temples",
-  },
-  {
-    id: "sai-baba-statue",
-    url: "/images/sai_baba.png",
-    alt: "Sai Baba Statue",
-    description: "Statue of Sai Baba",
-    category: "temples",
-  },
   // Canals
   {
     id: "canal-dam",
@@ -150,65 +139,13 @@ export const realImages: ImageData[] = [
     description: "Third view of Dohrighat dam",
     category: "canals",
   },
-  // Rivers & Pools
-  {
-    id: "ghaghara-river",
-    url: "/images/mukti_dham.png",
-    alt: "Ghaghara River at Muktidham",
-    description: "Ghaghara (Saryu) River at Muktidham Dohrighat",
-    category: "rivers",
-  },
-  {
-    id: "doharighat-pool",
-    url: "/images/doharighat pool.png",
-    alt: "Doharighat Pool",
-    description: "Pool in Dohrighat",
-    category: "rivers",
-  },
-  // Schools
-  {
-    id: "school-1",
-    url: "/images/school_1.png",
-    alt: "School 1 in Dohrighat",
-    description: "School in Dohrighat",
-    category: "education",
-  },
-  {
-    id: "school-2",
-    url: "/images/school_2.png",
-    alt: "School 2 in Dohrighat",
-    description: "Another school in Dohrighat",
-    category: "education",
-  },
-  // Colleges
-  {
-    id: "college-1",
-    url: "/images/college_1.png",
-    alt: "College 1 in Dohrighat",
-    description: "College in Dohrighat",
-    category: "education",
-  },
-  {
-    id: "college-2",
-    url: "/images/college_2.png",
-    alt: "College 2 in Dohrighat",
-    description: "Another college in Dohrighat",
-    category: "education",
-  },
-  {
-    id: "college-3",
-    url: "/images/college_3.png",
-    alt: "College 3 in Dohrighat",
-    description: "Third college in Dohrighat",
-    category: "education",
-  },
   // Other
   {
     id: "railway-station",
     url: "/images/railway_s.png",
     alt: "Dohrighat Railway Station",
     description: "Dohrighat Railway Station",
-    category: "other",
+    category: "transport",
   },
 ];
 
@@ -271,21 +208,22 @@ export const exploreCards = [
 
 export const touristPlaces: DohrighatPlace[] = [
   {
-    id: "muktidham",
-    name: "Bharat Mata Muktidham",
+    id: "muktidhaam",
+    name: "Muktidhaam Dohrighat",
     category: "tourist",
     subcategory: "religious",
-    description: "A beautiful temple complex and park on the banks of the Ghaghara River, featuring a large Shiva statue, Trimurti statue, and Indian Emblem. It's a popular place for devotees and tourists alike.",
+    description: "A beautiful temple complex and park on the banks of the Ghaghara River, featuring Bharat Mata Muktidham, a large Shiva statue, Trimurti statue, and Indian Emblem. It's a popular place for devotees and tourists alike.",
     history: "Muktidham is a modern spiritual and cultural center in Dohrighat, built to honor Bharat Mata (Mother India) and Lord Shiva.",
+    address: "Mukti Dham Road, East Nagar Panchayat, Dohrighat, Mau, Uttar Pradesh",
     latitude: 26.26,
     longitude: 83.52,
     images: ["/images/mukti_dham.png", "/images/mukti_dham2.png"],
     imageAlt: "Muktidham Dohrighat",
-    nearbyAttractions: ["Ghaghara River Ghats", "Shiv Temple"],
+    nearbyAttractions: ["Ghaghara River Ghats", "Ramghat", "Durga Ghat", "Khaki Ghat"],
     tips: "Best visited during sunrise or sunset for beautiful views of the river.",
     verificationStatus: "VERIFIED",
-    sourceUrl: "Mau District Administration",
-    lastVerified: "2024-07-24",
+    sourceUrl: "District Mau official tourism website",
+    lastVerified: "2025-07-22",
   },
 ];
 
@@ -301,39 +239,62 @@ export const riversGhats: DohrighatPlace[] = [
     longitude: 83.52,
     images: ["/images/river_ghaghara.png", "/images/mukti_dham.png"],
     imageAlt: "Ghaghara River Dohrighat",
-    nearbyAttractions: ["Muktidham", "Temples", "Canals"],
+    nearbyAttractions: ["Muktidhaam", "Ramghat", "Durga Ghat", "Khaki Ghat"],
     tips: "Take a walk along the ghats during sunrise or sunset for a peaceful experience.",
     verificationStatus: "VERIFIED",
+    lastVerified: "2025-07-22",
   },
   {
-    id: "ghaghara-riverfront",
-    name: "Ghaghara Riverfront",
+    id: "ramghat",
+    name: "Ramghat",
     category: "rivers",
     subcategory: "ghat",
-    description: "Riverfront area along the Ghaghara River in Dohrighat",
+    description: "An important historic ghat in Dohrighat with cultural and religious significance.",
+    verificationStatus: "VERIFIED",
+    sourceUrl: "District Mau official tourism website",
+    lastVerified: "2025-07-22",
+    images: [],
+  },
+  {
+    id: "durga-ghat",
+    name: "Durga Ghat",
+    category: "rivers",
+    subcategory: "ghat",
+    description: "A ghat in Dohrighat with religious significance.",
     verificationStatus: "PUBLICLY_LISTED",
+    lastVerified: "2025-07-22",
+    images: [],
+  },
+  {
+    id: "khaki-ghat",
+    name: "Khaki Ghat",
+    category: "rivers",
+    subcategory: "ghat",
+    description: "A ghat in Dohrighat.",
+    verificationStatus: "PUBLICLY_LISTED",
+    lastVerified: "2025-07-22",
     images: [],
   },
 ];
 
 export const temples: DohrighatPlace[] = [
   {
-    id: "muktidham",
+    id: "muktidhaam-temple",
     name: "Bharat Mata Muktidham",
     category: "temples",
     subcategory: "hindu",
-    description: "A beautiful temple complex and park on the banks of the Ghaghara River, featuring a large Shiva statue, Trimurti statue, and Indian Emblem. It's a popular place for devotees and tourists alike.",
+    description: "A beautiful temple complex and park on the banks of the Ghaghara River, featuring a large Shiva statue, Trimurti statue, and Indian Emblem.",
     history: "Muktidham is a modern spiritual and cultural center in Dohrighat, built to honor Bharat Mata (Mother India) and Lord Shiva.",
     address: "Mukti Dham Road, East Nagar Panchayat, Dohrighat",
     latitude: 26.26,
     longitude: 83.52,
     images: ["/images/mukti_dham.png", "/images/mukti_dham2.png"],
     imageAlt: "Muktidham Dohrighat",
-    nearbyAttractions: ["Ghaghara River Ghats", "Shiv Temple"],
+    nearbyAttractions: ["Ghaghara River Ghats", "Ramghat"],
     tips: "Best visited during sunrise or sunset for beautiful views of the river.",
     verificationStatus: "VERIFIED",
     sourceUrl: "Mau District Administration",
-    lastVerified: "2024-07-24",
+    lastVerified: "2025-07-22",
   },
   {
     id: "durga-maa-temple-tiwaripur",
@@ -358,9 +319,10 @@ export const canalsWaterInfra: DohrighatPlace[] = [
     longitude: 83.52,
     images: ["/images/canal_dam.png", "/images/canals_2.png", "/images/dam_3.png"],
     imageAlt: "Dohrighat Pump Canal",
-    nearbyAttractions: ["Ghaghara River", "Muktidham"],
+    nearbyAttractions: ["Ghaghara River", "Muktidhaam"],
     tips: "Great place for photography and understanding local irrigation systems. Best visited during early morning.",
     verificationStatus: "PUBLICLY_LISTED",
+    lastVerified: "2025-07-22",
   },
 ];
 
@@ -370,32 +332,30 @@ export const educationalInstitutes: EducationalInstitute[] = [
     name: "Naval's National Academy",
     type: "school",
     description: "A CBSE-affiliated school in Dohrighat.",
-    address: "Near Baijnath Petrol Pump, Azamgarh Road, Dohrighat, Mau",
+    address: "Near Baijnath Petrol Pump, Azamgarh Road, Dohrighat, Mau, Uttar Pradesh, India",
     board: "CBSE",
     affiliationNo: "2134149",
     schoolCode: "72142",
     principal: "Mrs. Sauvari Mukherjee",
+    contact: "+91 8400900771, +91 8400900772",
+    website: "https://navalsnationalacademydohrighat.com/",
     images: ["/images/school_1.png"],
     verificationStatus: "VERIFIED",
-  },
-  {
-    id: "cms-international-school",
-    name: "CMS International School",
-    type: "school",
-    address: "Dohrighat",
-    verificationStatus: "PUBLICLY_LISTED",
-    images: [],
+    sourceUrl: "https://navalsnationalacademydohrighat.com/",
+    lastVerified: "2025-07-22",
   },
   {
     id: "victory-inter-college",
     name: "Victory Inter College",
     type: "college",
+    description: "An aided inter college in Dohrighat.",
     address: "Dohrighat, Mau, Uttar Pradesh",
     board: "UPMSP",
-    yearEstablished: 1946,
     contact: "9616250965",
     images: ["/images/college_1.png"],
     verificationStatus: "PUBLICLY_LISTED",
+    sourceUrl: "District Mau public utility directory",
+    lastVerified: "2025-07-22",
   },
 ];
 
@@ -405,7 +365,15 @@ export const foodSweets: DohrighatPlace[] = [
     name: "Madhuraj Sweets",
     category: "food",
     subcategory: "sweets",
+    description: "A popular sweets and restaurant in Dohrighat.",
+    address: "Azamgarh - Dohrighat - Gorakhpur Road, Dohrighat, Uttar Pradesh 275303",
+    phone: "+91 8090064730",
+    rating: 3.9,
+    reviewCount: 224,
+    priceRange: "₹200–400",
+    openingHours: "07:00–23:00",
     verificationStatus: "PUBLICLY_LISTED",
+    lastVerified: "2025-07-22",
     images: [],
   },
   {
@@ -413,10 +381,13 @@ export const foodSweets: DohrighatPlace[] = [
     name: "Mahaveer Misthan",
     category: "food",
     subcategory: "sweets",
-    address: "Azamgarh–Dohrighat–Gorakhpur Road",
-    phone: "9956991676",
-    verificationStatus: "PUBLICLY_LISTED",
+    address: "Azamgarh - Dohrighat - Gorakhpur Road, Dohrighat, Uttar Pradesh 275303",
+    phone: "+91 9956991676",
     rating: 3.4,
+    reviewCount: 28,
+    openingHours: "06:30–22:30",
+    verificationStatus: "PUBLICLY_LISTED",
+    lastVerified: "2025-07-22",
     images: [],
   },
   {
@@ -424,31 +395,14 @@ export const foodSweets: DohrighatPlace[] = [
     name: "The Viraj Food Zone",
     category: "food",
     subcategory: "restaurant",
-    address: "Near Block, in front of Rudra Medical Store",
-    phone: "9616966319",
+    address: "In front of Rudra Medical Store, near Block, Dohrighat, Uttar Pradesh 275303",
+    phone: "+91 9616966319",
     rating: 4.5,
     reviewCount: 60,
+    priceRange: "₹1–200",
+    openingHours: "09:00–21:00",
     verificationStatus: "PUBLICLY_LISTED",
-    images: [],
-  },
-  {
-    id: "maa-bhojnalay",
-    name: "Maa Bhojnalay",
-    category: "food",
-    subcategory: "restaurant",
-    address: "Azamgarh Road, Dohrighat",
-    rating: 4.6,
-    verificationStatus: "PUBLICLY_LISTED",
-    images: [],
-  },
-  {
-    id: "gupta-sweet",
-    name: "Gupta Sweet",
-    category: "food",
-    subcategory: "sweets",
-    address: "Dohrighat",
-    rating: 4.5,
-    verificationStatus: "PUBLICLY_LISTED",
+    lastVerified: "2025-07-22",
     images: [],
   },
 ];
@@ -458,7 +412,14 @@ export const jewelleryShops: DohrighatPlace[] = [
     id: "vaibhav-swarn-kala-kendra",
     name: "Vaibhav Swarn Kala Kendra",
     category: "jewellery",
-    verificationStatus: "NEEDS_VERIFICATION",
+    subcategory: "jewellery",
+    address: "Mai Chowk, Dohrighat",
+    phone: "+91 8953814654",
+    rating: 4.0,
+    reviewCount: 3,
+    openingHours: "09:00–20:00",
+    verificationStatus: "PUBLICLY_LISTED",
+    lastVerified: "2025-07-22",
     images: [],
   },
   {
@@ -496,12 +457,17 @@ export const jewelleryShops: DohrighatPlace[] = [
 
 export const clothingSarees: DohrighatPlace[] = [
   {
-    id: "saptrang-saree",
+    id: "saptrang-saree-shop",
     name: "Saptrang Saree Shop",
     category: "clothing",
     subcategory: "saree",
-    address: "Dohrighat",
+    address: "Shop No. 1, Ground Floor, Chandrakatra Building, Ramghat Road, Dohrighat, Uttar Pradesh 275303",
+    phone: "+91 9415274877",
+    rating: 5.0,
+    reviewCount: 33,
     verificationStatus: "PUBLICLY_LISTED",
+    status: "Temporarily Closed / Needs Local Verification",
+    lastVerified: "2025-07-22",
     images: [],
   },
   {
@@ -515,22 +481,26 @@ export const clothingSarees: DohrighatPlace[] = [
     id: "shubham-vastralaya",
     name: "Shubham Vastralaya",
     category: "clothing",
-    address: "Dohrighat",
-    phone: "9415844869",
+    address: "Dohrighat, Uttar Pradesh 275303",
+    phone: "+91 9415844869",
     rating: 4.9,
     reviewCount: 58,
+    openingHours: "07:00–20:00",
     verificationStatus: "PUBLICLY_LISTED",
+    lastVerified: "2025-07-22",
     images: [],
   },
   {
     id: "gupta-fine-cloth-center",
     name: "Gupta Fine Cloth Center",
     category: "clothing",
-    address: "Mau–Gorakhpur Road, opposite Barhalganj Post Office, Dohrighat",
-    phone: "8882951333",
+    address: "Mau-Gorakhpur Road, opposite Barhalganj Post Office, Dohrighat, Uttar Pradesh 275303",
+    phone: "+91 8882951333",
     rating: 4.1,
     reviewCount: 27,
+    openingHours: "07:00–19:30",
     verificationStatus: "PUBLICLY_LISTED",
+    lastVerified: "2025-07-22",
     images: [],
   },
 ];
@@ -540,19 +510,54 @@ export const utensilsHousehold: DohrighatPlace[] = [
     id: "vaibhav-bartan-store",
     name: "Vaibhav Bartan Store",
     category: "utensils",
-    verificationStatus: "NEEDS_VERIFICATION",
+    subcategory: "household",
+    address: "Rajesultanpur - Doharighat Road, Dohrighat, Uttar Pradesh 275303",
+    verificationStatus: "PUBLICLY_LISTED",
+    status: "Permanently Closed / Needs Local Verification",
+    lastVerified: "2025-07-22",
     images: [],
   },
 ];
 
 export const markets: DohrighatPlace[] = [
   {
-    id: "barhalganj-dohrighat-bypass-market",
-    name: "Barhalganj–Dohrighat Bypass Market Area",
+    id: "dohrighat-market",
+    name: "Dohrighat Market",
     category: "markets",
-    rating: 4.4,
+    address: "Dohrighat, Uttar Pradesh 275303",
+    rating: 4.0,
+    reviewCount: 1283,
+    openingHours: "07:00–22:00",
     verificationStatus: "PUBLICLY_LISTED",
+    lastVerified: "2025-07-22",
     images: [],
+  },
+];
+
+export const transport: DohrighatPlace[] = [
+  {
+    id: "dohrighat-bus-stand",
+    name: "Dohrighat Bus Stand",
+    category: "transport",
+    subcategory: "bus depot",
+    address: "Dohrighat, Uttar Pradesh 275303",
+    rating: 4.1,
+    reviewCount: 154,
+    verificationStatus: "PUBLICLY_LISTED",
+    lastVerified: "2025-07-22",
+    images: [],
+  },
+  {
+    id: "dohrighat-railway-station",
+    name: "Dohrighat Railway Station",
+    category: "transport",
+    subcategory: "railway station",
+    address: "Dohrighat, Uttar Pradesh 275303",
+    rating: 4.2,
+    reviewCount: 92,
+    verificationStatus: "PUBLICLY_LISTED",
+    lastVerified: "2025-07-22",
+    images: ["/images/railway_s.png"],
   },
 ];
 
@@ -562,9 +567,12 @@ export const healthcare: DohrighatPlace[] = [
     name: "Government Hospital, Dohrighat",
     category: "healthcare",
     subcategory: "hospital",
-    address: "National Highway 29, Dohrighat",
+    address: "National Highway 29, Dohrighat, Uttar Pradesh 275303",
     rating: 4.2,
+    reviewCount: 16,
+    openingHours: "10:00–14:00 on listed working days",
     verificationStatus: "PUBLICLY_LISTED",
+    lastVerified: "2025-07-22",
     images: [],
   },
   {
@@ -572,9 +580,28 @@ export const healthcare: DohrighatPlace[] = [
     name: "Maa Shakti Multi-Speciality Hospital",
     category: "healthcare",
     subcategory: "hospital",
-    address: "Opposite Parvati Mahila PG College, Dohrighat",
+    address: "Opposite Parvati Mahila PG College, Dohrighat, Uttar Pradesh 275303",
     rating: 5.0,
+    reviewCount: 4,
     verificationStatus: "PUBLICLY_LISTED",
+    lastVerified: "2025-07-22",
+    images: [],
+  },
+];
+
+export const otherBusinesses: DohrighatPlace[] = [
+  {
+    id: "natraj-ply-hardware",
+    name: "Natraj Ply & Hardware",
+    category: "hardware",
+    subcategory: "plywood",
+    address: "Near Police Booth, Dohrighat, Uttar Pradesh 275303",
+    phone: "+91 9935435108",
+    rating: 4.8,
+    reviewCount: 19,
+    openingHours: "09:00–19:00",
+    verificationStatus: "PUBLICLY_LISTED",
+    lastVerified: "2025-07-22",
     images: [],
   },
 ];

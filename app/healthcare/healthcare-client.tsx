@@ -37,19 +37,45 @@ export default function HealthcareClient() {
                 className="group relative overflow-hidden rounded-2xl"
               >
                 <div className="w-full h-80 bg-gradient-to-br from-primary/20 to-primary/5 flex items-center justify-center">
-                  <span className="text-6xl">🏥</span>
+                  {place.images.length > 0 ? (
+                    <img
+                      src={place.images[0]}
+                      alt={place.imageAlt || place.name}
+                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                    />
+                  ) : (
+                    <span className="text-6xl">🏥</span>
+                  )}
                 </div>
                 <div className="absolute inset-0 bg-gradient-to-t from-[#050505] via-[#050505]/60 to-transparent"></div>
                 <div className="relative p-8 h-80 flex flex-col justify-end">
                   <h3 className="text-3xl font-serif font-bold mb-4 text-white">
                     {place.name}
                   </h3>
-                  <p className="text-muted-foreground text-lg mb-2">
-                    {place.address}
-                  </p>
+                  {place.description && (
+                    <p className="text-muted-foreground text-lg mb-2">
+                      {place.description}
+                    </p>
+                  )}
+                  {place.address && (
+                    <p className="text-muted-foreground mb-2">
+                      📍 {place.address}
+                    </p>
+                  )}
+                  {place.phone && (
+                    <p className="text-muted-foreground mb-2">
+                      📞 {place.phone}
+                    </p>
+                  )}
+                  {place.openingHours && (
+                    <p className="text-muted-foreground mb-2">
+                      🕒 {place.openingHours}
+                    </p>
+                  )}
                   {place.rating && (
                     <p className="text-primary text-sm">
                       ⭐ {place.rating}
+                      {place.reviewCount ? ` (${place.reviewCount} reviews)` : ""}
                     </p>
                   )}
                   <p className="text-xs text-muted-foreground mt-2">

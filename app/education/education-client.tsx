@@ -53,19 +53,45 @@ export default function EducationClient() {
                 <p className="text-muted-foreground mb-2">
                   <span className="text-primary">Type:</span> {institute.type}
                 </p>
-                <p className="text-muted-foreground mb-2">
-                  <span className="text-primary">Address:</span> {institute.address}
-                </p>
+                {institute.address && (
+                  <p className="text-muted-foreground mb-2">
+                    <span className="text-primary">Address:</span> {institute.address}
+                  </p>
+                )}
                 {institute.board && (
                   <p className="text-muted-foreground mb-2">
                     <span className="text-primary">Board:</span> {institute.board}
                   </p>
                 )}
+                {institute.principal && (
+                  <p className="text-muted-foreground mb-2">
+                    <span className="text-primary">Principal:</span> {institute.principal}
+                  </p>
+                )}
+                {institute.affiliationNo && (
+                  <p className="text-muted-foreground mb-2">
+                    <span className="text-primary">Affiliation Number:</span> {institute.affiliationNo}
+                  </p>
+                )}
+                {institute.schoolCode && (
+                  <p className="text-muted-foreground mb-2">
+                    <span className="text-primary">School Code:</span> {institute.schoolCode}
+                  </p>
+                )}
                 {institute.contact && (
-                  <p className="text-muted-foreground">
+                  <p className="text-muted-foreground mb-2">
                     <span className="text-primary">Contact:</span> {institute.contact}
                   </p>
                 )}
+                {institute.website && (
+                  <p className="text-muted-foreground mb-2">
+                    <span className="text-primary">Website:</span> <a href={institute.website} className="text-primary hover:underline" target="_blank" rel="noopener noreferrer">{institute.website}</a>
+                  </p>
+                )}
+                <p className="text-xs text-muted-foreground mt-4">
+                  Status: {institute.verificationStatus}
+                  {institute.lastVerified ? ` (Last verified: ${institute.lastVerified})` : ""}
+                </p>
               </motion.div>
             ))}
           </div>

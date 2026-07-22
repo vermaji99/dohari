@@ -36,11 +36,17 @@ export default function PlacesClient() {
                 transition={{ duration: 0.6, delay: i * 0.1 }}
                 className="group relative overflow-hidden rounded-2xl"
               >
-                <img
-                  src={place.images[0]}
-                  alt={place.imageAlt}
-                  className="w-full h-80 object-cover transition-transform duration-700 group-hover:scale-110"
-                />
+                {place.images.length > 0 ? (
+                  <img
+                    src={place.images[0]}
+                    alt={place.imageAlt || place.name}
+                    className="w-full h-80 object-cover transition-transform duration-700 group-hover:scale-110"
+                  />
+                ) : (
+                  <div className="w-full h-80 bg-gradient-to-br from-primary/20 to-primary/5 flex items-center justify-center">
+                    <span className="text-6xl">🏛️</span>
+                  </div>
+                )}
                 <div className="absolute inset-0 bg-gradient-to-t from-[#050505] via-[#050505]/60 to-transparent"></div>
                 <div className="relative p-8 h-80 flex flex-col justify-end">
                   <h3 className="text-3xl font-serif font-bold mb-4 text-white">

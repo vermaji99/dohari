@@ -37,7 +37,15 @@ export default function ClothingClient() {
                 className="group relative overflow-hidden rounded-2xl"
               >
                 <div className="w-full h-80 bg-gradient-to-br from-primary/20 to-primary/5 flex items-center justify-center">
-                  <span className="text-6xl">👗</span>
+                  {place.images.length > 0 ? (
+                    <img
+                      src={place.images[0]}
+                      alt={place.imageAlt || place.name}
+                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                    />
+                  ) : (
+                    <span className="text-6xl">👗</span>
+                  )}
                 </div>
                 <div className="absolute inset-0 bg-gradient-to-t from-[#050505] via-[#050505]/60 to-transparent"></div>
                 <div className="relative p-8 h-80 flex flex-col justify-end">
@@ -59,10 +67,20 @@ export default function ClothingClient() {
                       📞 {place.phone}
                     </p>
                   )}
+                  {place.openingHours && (
+                    <p className="text-muted-foreground mb-2">
+                      🕒 {place.openingHours}
+                    </p>
+                  )}
                   {place.rating && (
                     <p className="text-primary">
                       ⭐ {place.rating}{" "}
                       {place.reviewCount ? `(${place.reviewCount} reviews)` : ""}
+                    </p>
+                  )}
+                  {place.status && (
+                    <p className="text-red-400 text-sm mt-2">
+                      {place.status}
                     </p>
                   )}
                   <p className="text-xs text-muted-foreground mt-2">
