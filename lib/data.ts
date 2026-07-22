@@ -139,6 +139,43 @@ export const realImages: ImageData[] = [
     description: "Third view of Dohrighat dam",
     category: "canals",
   },
+  // Schools
+  {
+    id: "school-1",
+    url: "/images/school_1.png",
+    alt: "School 1 in Dohrighat",
+    description: "School in Dohrighat",
+    category: "education",
+  },
+  {
+    id: "school-2",
+    url: "/images/school_2.png",
+    alt: "School 2 in Dohrighat",
+    description: "Another school in Dohrighat",
+    category: "education",
+  },
+  // Colleges
+  {
+    id: "college-1",
+    url: "/images/college_1.png",
+    alt: "College 1 in Dohrighat",
+    description: "College in Dohrighat",
+    category: "education",
+  },
+  {
+    id: "college-2",
+    url: "/images/college_2.png",
+    alt: "College 2 in Dohrighat",
+    description: "Another college in Dohrighat",
+    category: "education",
+  },
+  {
+    id: "college-3",
+    url: "/images/college_3.png",
+    alt: "College 3 in Dohrighat",
+    description: "Third college in Dohrighat",
+    category: "education",
+  },
   // Other
   {
     id: "railway-station",
@@ -339,10 +376,18 @@ export const educationalInstitutes: EducationalInstitute[] = [
     principal: "Mrs. Sauvari Mukherjee",
     contact: "+91 8400900771, +91 8400900772",
     website: "https://navalsnationalacademydohrighat.com/",
-    images: ["/images/school_1.png"],
+    images: ["/images/school_1.png", "/images/school_2.png"],
     verificationStatus: "VERIFIED",
     sourceUrl: "https://navalsnationalacademydohrighat.com/",
     lastVerified: "2025-07-22",
+  },
+  {
+    id: "school-2",
+    name: "Dohrighat School 2",
+    type: "school",
+    description: "Another school in Dohrighat",
+    images: ["/images/school_2.png"],
+    verificationStatus: "NEEDS_VERIFICATION",
   },
   {
     id: "victory-inter-college",
@@ -352,10 +397,26 @@ export const educationalInstitutes: EducationalInstitute[] = [
     address: "Dohrighat, Mau, Uttar Pradesh",
     board: "UPMSP",
     contact: "9616250965",
-    images: ["/images/college_1.png"],
+    images: ["/images/college_1.png", "/images/college_2.png", "/images/college_3.png"],
     verificationStatus: "PUBLICLY_LISTED",
     sourceUrl: "District Mau public utility directory",
     lastVerified: "2025-07-22",
+  },
+  {
+    id: "college-2",
+    name: "Dohrighat College 2",
+    type: "college",
+    description: "Another college in Dohrighat",
+    images: ["/images/college_2.png"],
+    verificationStatus: "NEEDS_VERIFICATION",
+  },
+  {
+    id: "college-3",
+    name: "Dohrighat College 3",
+    type: "college",
+    description: "Third college in Dohrighat",
+    images: ["/images/college_3.png"],
+    verificationStatus: "NEEDS_VERIFICATION",
   },
 ];
 

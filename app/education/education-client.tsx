@@ -37,11 +37,16 @@ export default function EducationClient() {
                 className="glassmorphism p-8 rounded-2xl"
               >
                 {institute.images.length > 0 ? (
-                  <img
-                    src={institute.images[0]}
-                    alt={institute.name}
-                    className="w-full h-64 object-cover rounded-xl mb-6"
-                  />
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
+                    {institute.images.map((img, idx) => (
+                      <img
+                        key={idx}
+                        src={img}
+                        alt={`${institute.name} ${idx + 1}`}
+                        className="w-full h-48 object-cover rounded-xl"
+                      />
+                    ))}
+                  </div>
                 ) : (
                   <div className="w-full h-64 bg-gradient-to-br from-primary/20 to-primary/5 flex items-center justify-center rounded-xl mb-6">
                     <span className="text-6xl">🎓</span>
